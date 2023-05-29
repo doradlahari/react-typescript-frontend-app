@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { RootProvider } from "./context/rootcontext";
 import LoginForm from "./auth/login/login";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import SignupForm from "./auth/signup/signup";
@@ -6,9 +7,23 @@ import DashBoardPage from "./pages/dashboard/dashboard";
 import Verification from "./auth/otpvalidating/otpvalidator";
 import Forgotpassword from "./auth/forgotpassword/forgotpassword";
 import ResetPasswordForm from "./auth/resetpassword/resetpassword";
-function App() {
+
+interface AuthData {
+  token: string;
+}
+
+const App: React.FC = () => {
+  const [tokenValue, setTokenValue] = useState<AuthData>({
+    token: "",
+  });
+
   return (
-    <div>
+    <RootProvider
+      value={{
+        tokenValue,
+        setTokenValue,
+      }}
+    >
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LoginForm />} />
@@ -19,8 +34,8 @@ function App() {
           <Route path="/resetpassword" element={<ResetPasswordForm />} />
         </Routes>
       </BrowserRouter>
-    </div>
+    </RootProvider>
   );
-}
+};
 
 export default App;
