@@ -3,19 +3,20 @@ import { Form, Input, Button, Row, Col, message } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import "../login/login.css";
 import { useNavigate } from "react-router-dom";
-import Forgotpassword from "../forgotpassword/forgotpassword";
 import axios from "axios";
 const LoginForm = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
-  const Navigation = () => {
+  const navigation = () => {
     navigate("/signup");
+  };
+  const routeTo = () => {
+    navigate("/forgotpassword");
   };
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-  const [loginPageRender, setLoginPageRender] = useState(true);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -52,115 +53,91 @@ const LoginForm = () => {
 
   return (
     <div className="container">
-      {loginPageRender ? (
-        <>
-          <Form
-            form={form}
-            name="control-hooks"
-            onFinish={handleSubmit}
-            className="login-form-styles"
-          >
-            <Form.Item
-              name="email"
-              rules={[{ required: true, message: "Please enter your email" }]}
-            >
-              <Input
-                autoComplete="off"
-                size="large"
-                type="email"
-                name="email"
-                placeholder="Enter email"
-                value={formData.email}
-                onChange={handleChange}
-                autoFocus
-              />
-            </Form.Item>
+      <Form
+        form={form}
+        name="control-hooks"
+        onFinish={handleSubmit}
+        className="login-form-styles"
+      >
+        <Form.Item
+          name="email"
+          rules={[{ required: true, message: "Please enter your email" }]}
+        >
+          <Input
+            autoComplete="off"
+            size="large"
+            type="email"
+            name="email"
+            placeholder="Enter email"
+            value={formData.email}
+            onChange={handleChange}
+            autoFocus
+          />
+        </Form.Item>
 
-            <Form.Item
-              name="password"
-              rules={[
-                { required: true, message: "Please enter your password" },
-              ]}
+        <Form.Item
+          name="password"
+          rules={[{ required: true, message: "Please enter your password" }]}
+        >
+          <Input.Password
+            size="large"
+            name="password"
+            placeholder="Enter password"
+            value={formData.password}
+            onChange={handleChange}
+            iconRender={(visible) =>
+              visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+            }
+          />
+        </Form.Item>
+        <Form.Item>
+          <Row>
+            <Col
+              span={12}
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
             >
-              <Input.Password
+              <Button type="primary" htmlType="submit" size="large">
+                Login
+              </Button>
+            </Col>
+            <Col
+              span={12}
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Button
+                type="primary"
+                htmlType="submit"
                 size="large"
-                name="password"
-                placeholder="Enter password"
-                value={formData.password}
-                onChange={handleChange}
-                iconRender={(visible) =>
-                  visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-                }
-              />
-            </Form.Item>
-            <Form.Item>
-              <Row>
-                <Col
-                  span={12}
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <Button type="primary" htmlType="submit" size="large">
-                    Login
-                  </Button>
-                </Col>
-                <Col
-                  span={12}
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    size="large"
-                    onClick={Navigation}
-                  >
-                    Sign Up
-                  </Button>
-                </Col>
-              </Row>
-              <Row>
-                <Col
-                  span={24}
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <Button
-                    type="link"
-                    onClick={() => {
-                      setLoginPageRender(false);
-                    }}
-                  >
-                    Forgot Password
-                  </Button>
-                </Col>
-              </Row>
-            </Form.Item>
-          </Form>
-        </>
-      ) : (
-        <Row>
-          <Col
-            span={24}
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Forgotpassword />
-          </Col>
-        </Row>
-      )}
+                onClick={navigation}
+              >
+                Sign Up
+              </Button>
+            </Col>
+          </Row>
+          <Row>
+            <Col
+              span={24}
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Button type="link" onClick={routeTo}>
+                Forgot Password
+              </Button>
+            </Col>
+          </Row>
+        </Form.Item>
+      </Form>
     </div>
   );
 };

@@ -4,7 +4,7 @@ import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const SignupForm: React.FC = () => {
+const ResetPasswordForm: React.FC = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
 
@@ -13,19 +13,11 @@ const SignupForm: React.FC = () => {
   };
 
   interface FormData {
-    firstname: string;
-    lastname: string;
-    email: string;
-    mobileNumber: string;
     password: string;
     conformpassword: string;
   }
 
   const [formData, setFormData] = useState<FormData>({
-    firstname: "",
-    lastname: "",
-    email: "",
-    mobileNumber: "",
     password: "",
     conformpassword: "",
   });
@@ -40,10 +32,6 @@ const SignupForm: React.FC = () => {
 
   const onFinish = () => {
     let payload = {
-      firstName: formData.firstname,
-      lastName: formData.lastname,
-      email: formData.email,
-      mobileNumber: formData.mobileNumber,
       password: formData.password,
       conformPassword: formData.conformpassword,
     };
@@ -62,8 +50,6 @@ const SignupForm: React.FC = () => {
       .catch(() => {
         message.error("Registration failed");
       });
-
-    // Perform signup logic here
   };
 
   return (
@@ -74,94 +60,6 @@ const SignupForm: React.FC = () => {
         onFinish={onFinish}
         className="login-form-styles"
       >
-        <Form.Item
-          name="firstname"
-          rules={[
-            { required: true, message: "Please input your first name!" },
-            {
-              min: 4,
-              message: "First name must be at least 4 characters long!",
-            },
-          ]}
-          hasFeedback
-        >
-          <Input
-            size="large"
-            placeholder="Enter first name"
-            name="firstname"
-            autoFocus
-            value={formData.firstname}
-            onChange={handleChange}
-          />
-        </Form.Item>
-
-        <Form.Item
-          name="lastname"
-          rules={[
-            { required: true, message: "Please input your last name!" },
-            {
-              min: 4,
-              message: "Last name must be at least 4 characters long!",
-            },
-          ]}
-          hasFeedback
-        >
-          <Input
-            size="large"
-            placeholder="Enter last name"
-            name="lastname"
-            value={formData.lastname}
-            onChange={handleChange}
-          />
-        </Form.Item>
-
-        <Form.Item
-          name="email"
-          rules={[
-            {
-              required: true,
-              message: "Enter your email!",
-            },
-            { whitespace: true },
-            { type: "email", message: "Please enter a valid email" },
-          ]}
-          hasFeedback
-        >
-          <Input
-            size="large"
-            type="email"
-            name="email"
-            placeholder="Enter email"
-            value={formData.email}
-            onChange={handleChange}
-          />
-        </Form.Item>
-
-        <Form.Item
-          name="mobileNumber"
-          rules={[
-            {
-              required: true,
-              message: "Enter your phone number!",
-            },
-            { whitespace: true },
-            { min: 10, message: "Number must be 10 digits" },
-            {
-              pattern: new RegExp(/^[6-9]\d{9}$/),
-              message: "Enter a valid number",
-            },
-          ]}
-          hasFeedback
-        >
-          <Input
-            size="large"
-            name="mobileNumber"
-            placeholder="Phone Number"
-            value={formData.mobileNumber}
-            onChange={handleChange}
-          />
-        </Form.Item>
-
         <Form.Item
           name="password"
           rules={[{ required: true, message: "Please enter your password" }]}
@@ -178,9 +76,8 @@ const SignupForm: React.FC = () => {
             }
           />
         </Form.Item>
-
         <Form.Item
-          name="conformpassword"
+          name="confirmpassword"
           dependencies={["password"]}
           hasFeedback
           rules={[
@@ -215,7 +112,7 @@ const SignupForm: React.FC = () => {
         <Form.Item>
           <Row>
             <Col
-              span={12}
+              span={24}
               style={{
                 display: "flex",
                 justifyContent: "center",
@@ -228,19 +125,7 @@ const SignupForm: React.FC = () => {
                 size="large"
                 onClick={Navigation}
               >
-                Login
-              </Button>
-            </Col>
-            <Col
-              span={12}
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Button type="primary" htmlType="submit" size="large">
-                Sign Up
+                Reset Password
               </Button>
             </Col>
           </Row>
@@ -250,4 +135,4 @@ const SignupForm: React.FC = () => {
   );
 };
 
-export default SignupForm;
+export default ResetPasswordForm;

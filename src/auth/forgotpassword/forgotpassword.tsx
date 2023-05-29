@@ -1,13 +1,20 @@
 import React, { useState } from "react";
 import { Form, Input, Button, Row, Col, message } from "antd";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import "../forgotpassword/forgotpassword.css";
-const Forgotpassword = () => {
+
+const Forgotpassword: React.FC = () => {
   const [form] = Form.useForm();
-  const [formData, setFormData] = useState({
+
+  interface FormData {
+    email: string;
+  }
+
+  const [formData, setFormData] = useState<FormData>({
     email: "",
-    password: "",
   });
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevFormData) => ({
@@ -16,32 +23,39 @@ const Forgotpassword = () => {
     }));
   };
 
+  const navigate = useNavigate();
+
+  const routeTo = () => {
+    navigate("/");
+  };
+
   const handleSubmit = () => {
     const payload = {
       email: formData.email,
-      password: formData.password,
     };
+
     axios
       .post("http://localhost:5000/loginuser", payload)
       .then((res) => {
         if (res.data === "user not found") {
           message.error("User not found");
-        } else if (res.data === "invalid credentails") {
+        } else if (res.data === "invalid credentials") {
           message.error("Invalid credentials");
         } else {
           console.log(res.data);
           localStorage.setItem("email", formData.email);
-          message.success("login sucessfull!");
+          message.success("Login successful!");
         }
       })
       .catch(() => {
-        message.error("something went wrong please try again");
+        message.error("Something went wrong, please try again");
       });
+
     console.log("Login clicked");
   };
 
   return (
-    <div>
+    <div className="container">
       <Form
         form={form}
         name="control-hooks"
@@ -63,6 +77,7 @@ const Forgotpassword = () => {
             autoFocus
           />
         </Form.Item>
+
         <Form.Item>
           <Row>
             <Col
@@ -75,6 +90,26 @@ const Forgotpassword = () => {
             >
               <Button type="primary" htmlType="submit" size="large">
                 Forgot Password
+              </Button>
+            </Col>
+          </Row>
+
+          <Row>
+            <Col
+              span={24}
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Button
+                type="link"
+                htmlType="submit"
+                size="large"
+                onClick={routeTo}
+              >
+                Login
               </Button>
             </Col>
           </Row>
