@@ -11,7 +11,6 @@ const ResetPasswordForm: React.FC = () => {
   const Navigation = () => {
     navigate("/");
   };
-
   interface FormData {
     password: string;
     conformpassword: string;
@@ -35,20 +34,19 @@ const ResetPasswordForm: React.FC = () => {
       password: formData.password,
       conformPassword: formData.conformpassword,
     };
-
     axios
-      .post("http://localhost:5000/createuser", payload)
+      .put("http://localhost:5000/resetpassword", payload)
       .then((res) => {
-        if (res.data === "user already exists") {
-          message.error("User already exists");
+        if (res.data === "User not found") {
+          message.error("User not found");
         } else {
           console.log(res.data);
-          message.success("Registration successful");
-          navigate("/verification");
+          message.success("Password reset successfully");
+          navigate("/profile");
         }
       })
       .catch(() => {
-        message.error("Registration failed");
+        message.error("Reset Password failed");
       });
   };
 

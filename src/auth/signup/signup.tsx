@@ -18,7 +18,7 @@ const SignupForm: React.FC = () => {
     email: string;
     mobileNumber: string;
     password: string;
-    conformpassword: string;
+    confirmpassword: string;
   }
 
   const [formData, setFormData] = useState<FormData>({
@@ -27,7 +27,7 @@ const SignupForm: React.FC = () => {
     email: "",
     mobileNumber: "",
     password: "",
-    conformpassword: "",
+    confirmpassword: "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,7 +45,7 @@ const SignupForm: React.FC = () => {
       email: formData.email,
       mobileNumber: formData.mobileNumber,
       password: formData.password,
-      conformPassword: formData.conformpassword,
+      confirmPassword: formData.confirmpassword,
     };
 
     axios
@@ -180,7 +180,7 @@ const SignupForm: React.FC = () => {
         </Form.Item>
 
         <Form.Item
-          name="conformpassword"
+          name="confirmpassword"
           dependencies={["password"]}
           hasFeedback
           rules={[
@@ -203,8 +203,8 @@ const SignupForm: React.FC = () => {
           <Input.Password
             size="large"
             placeholder="Verify password"
-            name="conformpassword"
-            value={formData.conformpassword}
+            name="confirmpassword"
+            value={formData.confirmpassword}
             onChange={handleChange}
             iconRender={(visible) =>
               visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />

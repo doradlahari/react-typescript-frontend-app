@@ -35,12 +35,10 @@ const Forgotpassword: React.FC = () => {
     };
 
     axios
-      .post("http://localhost:5000/loginuser", payload)
+      .post("http://localhost:5000/forgotpassword", payload)
       .then((res) => {
         if (res.data === "user not found") {
           message.error("User not found");
-        } else if (res.data === "invalid credentials") {
-          message.error("Invalid credentials");
         } else {
           console.log(res.data);
           localStorage.setItem("email", formData.email);
@@ -50,8 +48,6 @@ const Forgotpassword: React.FC = () => {
       .catch(() => {
         message.error("Something went wrong, please try again");
       });
-
-    console.log("Login clicked");
   };
 
   return (

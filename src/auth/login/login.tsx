@@ -34,9 +34,10 @@ const LoginForm = () => {
     axios
       .post("http://localhost:5000/loginuser", payload)
       .then((res) => {
-        if (res.data === "user not found") {
+        if (res.data === "User not found") {
           message.error("User not found");
-        } else if (res.data === "invalid credentails") {
+        }
+        if (res.data === "Invalid credentials") {
           message.error("Invalid credentials");
         } else {
           console.log(res.data);
