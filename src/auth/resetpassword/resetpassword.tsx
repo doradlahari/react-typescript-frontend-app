@@ -18,7 +18,6 @@ const ResetPasswordForm: React.FC = () => {
     password: "",
     confirmPassword: "",
   });
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevFormData) => ({
@@ -42,7 +41,9 @@ const ResetPasswordForm: React.FC = () => {
         } else {
           console.log(res.data);
           message.success("Password reset successfully");
-          // navigate("/profile");
+          setTimeout(() => {
+            navigate("/profile");
+          }, 5000);
         }
       })
       .catch(() => {
