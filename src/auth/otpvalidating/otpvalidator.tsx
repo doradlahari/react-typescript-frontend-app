@@ -34,8 +34,8 @@ const Verification: React.FC = () => {
     axios
       .post("http://localhost:5000/checkotp", payload)
       .then((res) => {
-        if (res.data === "valid otp") {
-          message.success("valid otp");
+        if (res.data === "Account Verification Successfull") {
+          message.success("Account verified Successfully");
           navigate("/profile");
         } else {
           message.error("invalid otp");

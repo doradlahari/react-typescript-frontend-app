@@ -36,14 +36,14 @@ const LoginForm = () => {
       .then((res) => {
         if (res.data === "User not found") {
           message.error("User not found");
-        }
-        if (res.data === "Invalid credentials") {
-          message.error("Invalid credentials");
         } else {
           console.log(res.data);
           localStorage.setItem("email", formData.email);
           message.success("login sucessfull!");
           navigate("/profile");
+        }
+        if (res.data === "Invalid credentials") {
+          message.error("Invalid credentials");
         }
       })
       .catch(() => {
