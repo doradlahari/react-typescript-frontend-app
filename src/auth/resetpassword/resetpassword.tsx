@@ -1,24 +1,22 @@
 import React, { useState } from "react";
 import { Form, Input, Button, Col, Row, message } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
 const ResetPasswordForm: React.FC = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
+  const { userId } = useParams(); // Retrieve the userId from the route parameters
 
-  const Navigation = () => {
-    navigate("/");
-  };
   interface FormData {
     password: string;
-    conformpassword: string;
+    confirmPassword: string;
   }
 
   const [formData, setFormData] = useState<FormData>({
     password: "",
-    conformpassword: "",
+    confirmPassword: "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,17 +30,19 @@ const ResetPasswordForm: React.FC = () => {
   const onFinish = () => {
     let payload = {
       password: formData.password,
-      conformPassword: formData.conformpassword,
+      confirmPassword: formData.confirmPassword,
     };
     axios
-      .put("http://localhost:5000/resetpassword", payload)
+      .put(`http://localhost:5000/resetpassword/${userId}`, payload)
       .then((res) => {
+        console.log(res);
+        console.log(res.data);
         if (res.data === "User not found") {
           message.error("User not found");
         } else {
           console.log(res.data);
           message.success("Password reset successfully");
-          navigate("/profile");
+          // navigate("/profile");
         }
       })
       .catch(() => {
@@ -98,8 +98,8 @@ const ResetPasswordForm: React.FC = () => {
           <Input.Password
             size="large"
             placeholder="Verify password"
-            name="conformpassword"
-            value={formData.conformpassword}
+            name="confirmPassword"
+            value={formData.confirmPassword}
             onChange={handleChange}
             iconRender={(visible) =>
               visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
@@ -117,12 +117,7 @@ const ResetPasswordForm: React.FC = () => {
                 alignItems: "center",
               }}
             >
-              <Button
-                type="primary"
-                htmlType="submit"
-                size="large"
-                onClick={Navigation}
-              >
+              <Button type="primary" htmlType="submit" size="large">
                 Reset Password
               </Button>
             </Col>

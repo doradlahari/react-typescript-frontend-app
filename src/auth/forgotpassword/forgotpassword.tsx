@@ -42,7 +42,9 @@ const Forgotpassword: React.FC = () => {
         } else {
           console.log(res.data);
           localStorage.setItem("email", formData.email);
-          message.success("Login successful!");
+          const userId = res.data.userId; // Update this line to match the actual path of userId in the server response
+          navigate(`/resetpassword/${userId}`); // Include the userId parameter in the URL
+          message.success("reset link send to email");
         }
       })
       .catch(() => {
@@ -63,7 +65,7 @@ const Forgotpassword: React.FC = () => {
           rules={[{ required: true, message: "Please enter your email" }]}
         >
           <Input
-            autoComplete="off"
+            autoComplete="on"
             size="large"
             type="email"
             name="email"

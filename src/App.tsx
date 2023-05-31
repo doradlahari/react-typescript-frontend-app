@@ -31,7 +31,10 @@ const App: React.FC = () => {
           <Route path="/verification" element={<Verification />} />
           <Route path="/profile" element={<DashBoardPage />} />
           <Route path="/forgotpassword" element={<Forgotpassword />} />
-          <Route path="/resetpassword" element={<ResetPasswordForm />} />
+          <Route
+            path="/resetpassword/:userId"
+            element={<ResetPasswordForm />}
+          />
         </Routes>
       </BrowserRouter>
     </RootProvider>
